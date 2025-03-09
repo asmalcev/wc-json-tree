@@ -5,17 +5,24 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <script src="../index.js"></script>
+        <style>
+            json-tree {
+                color: blue;
+            }
+        </style>
     </head>
     <body>
-        <json-tree style="p { color: red }"></json-tree>
+        <json-tree
+            style="
+                p {
+                    color: red;
+                }
+            "
+        ></json-tree>
 
         <script>
             const tree = document.querySelector('json-tree');
-            tree.data = {
-                a: 1,
-                b: 2,
-                c: { c1: 3, c2: 4 },
-            };
+            tree.data = [1, 2, 3];
         </script>
     </body>
 </html>

@@ -3,11 +3,9 @@
 A small web component for rendering json in the form of a tree
 
 ## Reference
-| Attribute    | Purpose                                          | Example values     |
-| ------------ | ------------------------------------------------ | ------------------ |
-| `tab-size`   | Indentation from the left edge to create nesting | `10px`, `5%`       |
-| `space-size` | Padding of rows                                  | `10px`, `5%`       |
-| `style`      | Pass custom styles into component                | `p { color: red }` |
+| Attribute | Purpose                           | Example values     |
+| --------- | --------------------------------- | ------------------ |
+| `style`   | Pass custom styles into component | `p { color: red }` |
 
 
 | Property   | Purpose                            | Example value                         |
@@ -15,6 +13,11 @@ A small web component for rendering json in the form of a tree
 | `data`     | Pass data into component           | `{ a: 1, b: 2, c: { c1: 3, c2: 4 } }` |
 | `style`    | Pass custom styles into component  | `p { color: red }`                    |
 | `replacer` | Replace any default node rendering | `({ defaultNode }) => defaultNode()`  |
+
+| CSS Property | Purpose                                          | Example value |
+| ------------ | ------------------------------------------------ | ------------- |
+| `--tab`      | Indentation from the left edge to create nesting | `10px`, `5%`  |
+| `--space`    | Padding of rows                                  | `10px`, `5%`  |
 
 ### `replacer`
 
@@ -62,7 +65,7 @@ Returns:
 </script>
 ```
 
-### Replacer and style for displaying array with square brackets
+### Renderer and style for displaying array with square brackets
 
 ```html
 <json-tree></json-tree>
@@ -76,7 +79,7 @@ Returns:
         arr: [1, 2, { el: 3 }],
     };
 
-    tree.replacer = ({ key, node, level, defaultNode, parentNode }) => {
+    tree.renderer = ({ key, node, level, defaultNode, parentNode }) => {
         const _node = defaultNode();
 
         if (!Array.isArray(node)) return _node;
@@ -96,6 +99,6 @@ Returns:
     };
 
     // this will result in displaying [...] after the closed details with an array inside
-    tree.styles = `details.array:not(*[open]) summary::after { content: '...]' }`;
+    tree.style = `details.array:not(*[open]) summary::after { content: '...]' }`;
 </script>
 ```

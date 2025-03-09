@@ -1,4 +1,4 @@
-const renderJson = (obj, replacer) => {
+const renderJson = (obj, renderer) => {
     const objRoot = document.createElement('ul');
 
     const renderNode = (root, node, key, level) => {
@@ -7,17 +7,11 @@ const renderJson = (obj, replacer) => {
         const li = document.createElement('li');
 
         const defaultNode = () => {
-            if (typeof node === 'string' || typeof node === 'number') {
-                const p = document.createElement('p');
-
-                p.innerHTML = `${key} = ${String(node)}`;
-
-                return p;
-            } else if (typeof node === 'object') {
+            if (typeof node === 'object') {
                 const nodeRoot = document.createElement('details');
 
                 const summary = document.createElement('summary');
-                summary.innerText = key;
+                summary.innerText = `${key}:`;
                 nodeRoot.appendChild(summary);
 
                 const ul = document.createElement('ul');
@@ -29,11 +23,16 @@ const renderJson = (obj, replacer) => {
 
                 return nodeRoot;
             }
+
+            const p = document.createElement('p');
+            p.innerHTML = `${key} = ${String(node)}`;
+
+            return p;
         };
 
         let resultNode;
-        if (replacer) {
-            resultNode = replacer({
+        if (renderer) {
+            resultNode = renderer({
                 node,
                 level,
                 defaultNode,
@@ -64,7 +63,7 @@ const styles = `
     font-family: monospace;
 }
 
-.root {
+:host { 
     --tab: 16px;
     --space: 8px;
 }
@@ -92,18 +91,16 @@ p {
 }
 `;
 
-const tabSizeAttr = 'tab-size';
-const spaceSizeAttr = 'space-size';
 const stylesAttr = 'style';
 
 class JsonTree extends HTMLElement {
     static get observedAttributes() {
-        return [tabSizeAttr, spaceSizeAttr, stylesAttr];
+        return [stylesAttr];
     }
 
     #root = null;
     #data;
-    #replacer;
+    #renderer;
     #customStylesRoot;
 
     constructor() {
@@ -142,12 +139,8 @@ class JsonTree extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        if (name === tabSizeAttr) {
-            this.#root.style.setProperty('--tab', newValue);
-        } else if (name === spaceSizeAttr) {
-            this.#root.style.setProperty('--space', newValue);
-        } else if (name === stylesAttr) {
-            this.styles = newValue;
+        if (name === stylesAttr) {
+            this.style = newValue;
         }
     }
 
@@ -159,15 +152,15 @@ class JsonTree extends HTMLElement {
         this.#data = value;
 
         this.#root.innerHTML = '';
-        this.#root.appendChild(renderJson(value, this.#replacer));
+        this.#root.appendChild(renderJson(value, this.#renderer));
     }
 
-    set replacer(value) {
-        this.#replacer = value;
+    set renderer(value) {
+        this.#renderer = value;
         this.data = this.#data;
     }
 
-    set styles(value) {
+    set style(value) {
         this.#customStylesRoot.textContent = value;
     }
 }
