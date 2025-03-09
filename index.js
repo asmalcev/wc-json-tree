@@ -93,7 +93,7 @@ p {
 
 const stylesAttr = 'style';
 
-class JsonTree extends HTMLElement {
+export class JsonTree extends HTMLElement {
     static get observedAttributes() {
         return [stylesAttr];
     }
