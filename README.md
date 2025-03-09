@@ -1,5 +1,7 @@
 # Web Component JsonTree
 
+<a href="https://pkg-size.dev/@asmalcev/wc-json-tree"><img src="https://pkg-size.dev/badge/install/8004" title="Install size for @asmalcev/wc-json-tree"></a> <a href="https://pkg-size.dev/@asmalcev/wc-json-tree"><img src="https://pkg-size.dev/badge/bundle/2348" title="Bundle size for @asmalcev/wc-json-tree"></a>
+
 A small web component for rendering json in the form of a tree
 
 ## Reference
