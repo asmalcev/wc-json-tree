@@ -1,5 +1,33 @@
 # Web Component JsonTree
 
+A small web component for rendering json in the form of a tree
+
+## Reference
+| Attribute    | Purpose                                          | Example values     |
+| ------------ | ------------------------------------------------ | ------------------ |
+| `tab-size`   | Indentation from the left edge to create nesting | `10px`, `5%`       |
+| `space-size` | Padding of rows                                  | `10px`, `5%`       |
+| `style`      | Pass custom styles into component                | `p { color: red }` |
+
+
+| Property   | Purpose                            | Example value                         |
+| ---------- | ---------------------------------- | ------------------------------------- |
+| `data`     | Pass data into component           | `{ a: 1, b: 2, c: { c1: 3, c2: 4 } }` |
+| `style`    | Pass custom styles into component  | `p { color: red }`                    |
+| `replacer` | Replace any default node rendering | `({ defaultNode }) => defaultNode()`  |
+
+### `replacer`
+
+Props:
+- `key: string` — name of key from passed object
+- `node: any` — value of node from passed object
+- `level: number` — level of nesting
+- `defaultNode: function` — function, that returns default node
+- `parentNode: HTMLLiElement` — parent inside which the node will be rendered
+
+Returns:
+- `HTMLElement` — node to render
+
 ## Examples
 
 ### Valid JSON as child
